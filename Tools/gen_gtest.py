@@ -380,8 +380,8 @@ if __name__ == "__main__":
     if len( sys.argv ) < 3:
         print("\033[31m" + "Python execution error: invalid execution parameter.\n" + "\033[0m")
         print("\033[92m" + "Python " + "%s [Target hpp file path] [Save file path]" % sys.argv[0] + "\033[0m")
-        print("\033[92m" + "[Target hpp file path]\n"  + "\033[0m" + " - Ex. C:/svnet3/src/object_detection20/object_detector20_impl.hpp")
-        print("\033[92m" + "[Save file path]\n"  + "\033[0m" + " - Ex. C:/svnet3/testcases/test_object_detector20_impl.cpp")
+        print("\033[92m" + "[Target hpp file path]\n"  + "\033[0m" + " - Ex. file_path/impl.hpp")
+        print("\033[92m" + "[Save file path]\n"  + "\033[0m" + " - Ex. file_path/test_impl.cpp")
         exit()
     
     target_hpp_path = sys.argv[1]
