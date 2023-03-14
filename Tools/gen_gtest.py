@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """gen_gtest.py tool sequence.
 
-Execution path: root path
-Execution parameters:  [Target hpp file path] [Save file path]
+Execution path: 
+Execution parameters: 
 
+Prepare. 
 """
 import re, sys, os
 
@@ -228,20 +229,20 @@ class GtestGenerator:
         hpp_name = os.path.basename(self.__target_hpp_path)
         # Create test code head
         self.gtest_code = "\n".join([
-            "#include <iostream>", 
-            "",
-            "#include \"gtest/gtest.h\"", 
-            "#include \"testsuite_resources.h\"", 
-            "#include \"testcase_utils.hpp\"",
-            "", 
-            "#include \""+ hpp_name + "\"", 
-            "",
-            "/*",
-            "* This tool creates only \"Google Test\" form for functions of hpp files.",
-            "* Function parameters value and expected result value must be entered by the user.",
-            "*/",
-            "\n"
-            ])
+                        "#include <iostream>", 
+                        "",
+                        "#include \"gtest/gtest.h\"", 
+                        "#include \"testsuite_resources.h\"", 
+                        "#include \"testcase_utils.hpp\"",
+                        "", 
+                        "#include \""+ hpp_name + "\"", 
+                        "",
+                        "/*",
+                        "* This tool creates only \"Google Test\" form for functions of hpp files.",
+                        "* Function parameters value and expected result value must be entered by the user.",
+                        "*/",
+                        "\n"
+                        ])
 
 
     # ---------------------------- function seperation line ------------------------------------ #
@@ -307,7 +308,7 @@ class GtestGenerator:
             return_type_expected = arg_function_info["return_type"][8:] + " expected_value;"
         elif "inline " == arg_function_info["return_type"][0:7]:
             return_type_result = arg_function_info["return_type"][7:] + " result_value = "
-            return_type_expected = arg_function_info["return_type"][7:] + " expected_value;"        
+            return_type_expected = arg_function_info["return_type"][7:] + " expected_value;"
         else:
             return_type_result = arg_function_info["return_type"] + " result_value = "
             return_type_expected = arg_function_info["return_type"] + " expected_value;"
@@ -317,13 +318,14 @@ class GtestGenerator:
         
         # Generate the test case body
         test_body = "\n".join([
-            "\t// EXPECTED RESULT (You have to enter the value)",
-            "\t" + return_type_expected,
-            "\t// INPUT (You have to enter the value)",
-            input_variable,
-            "\t" + return_type_result + self.__namespace_name + "::"  + self.__class_name + "::" + arg_function_info["name"] + "(" + ", ".join([argument["name"] for argument in arg_function_info["arguments"]]) + ");",
-            "\t// EXPECT",
-            "\tEXPECT_EQ(expected_value, result_value);"
+                    "\t// EXPECTED RESULT (You have to enter the value)",
+                    "\t" + return_type_expected,
+                    "\t// INPUT (You have to enter the value)",
+                    input_variable,
+                    "\t" + return_type_result + self.__namespace_name + "::"  + self.__class_name + "::" + \
+                            arg_function_info["name"] + "(" + ", ".join([argument["name"] for argument in arg_function_info["arguments"]]) + ");",
+                    "\t// EXPECT",
+                    "\tEXPECT_EQ(expected_value, result_value);"
         ])
         
         return test_body
@@ -361,6 +363,7 @@ class GtestGenerator:
                 # Add the test case to the test code
                 self.gtest_code += test_function
         
+        # Create test cpp file
         f = open(arg_save_path, 'w')
         f.write(self.gtest_code)
         f.close
@@ -384,11 +387,14 @@ if __name__ == "__main__":
         print("\033[92m" + "[Save file path]\n"  + "\033[0m" + " - Ex. file_path/test_impl.cpp")
         exit()
     
+    # Input parameters
     target_hpp_path = sys.argv[1]
     save_path = sys.argv[2]
     
+    # Parsing hpp code
     hp = HppParser()
     hp.create_classes_map(target_hpp_path)
+    # Generation test cpp file
     gg = GtestGenerator()
     gg.generate_gtest_cpp(hp.class_map, target_hpp_path, save_path)
     
