@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """gen_gtest.py tool sequence.
 
-Execution path: 
-Execution parameters: 
+Execution path: root path
+Execution parameters:  [Target hpp file path] [Save file path]
 
-Prepare. 
 """
 import re, sys, os
 
