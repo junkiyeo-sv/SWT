@@ -324,7 +324,7 @@ class GtestGenerator:
                     "\t" + return_type_result + self.__namespace_name + "::"  + self.__class_name + "::" + \
                             arg_function_info["name"] + "(" + ", ".join([argument["name"] for argument in arg_function_info["arguments"]]) + ");",
                     "\t// EXPECT",
-                    "\tEXPECT_EQ(expected_value, result_value);"
+                    "\tEXPECT_EQ(result_value, expected_value);"
         ])
         
         return test_body
