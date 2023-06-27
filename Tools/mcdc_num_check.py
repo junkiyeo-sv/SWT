@@ -17,6 +17,10 @@ def count_multiple_condtion(folder_path):
         for td in tds:
             if ('switch' in td.parent.contents[7].text):
                 continue
+            if not(('if' in td.parent.contents[7].text) or \
+                ('else if' in td.parent.contents[7].text) or \
+                ('while' in td.parent.contents[7].text)) :
+                continue
             taken_branches = td.find_all(class_="takenBranch")
             if len(taken_branches) >= 3:
                 count += 1
@@ -24,6 +28,6 @@ def count_multiple_condtion(folder_path):
         print(html_file + " 멀티플 condition 개수: " + str(f_count))
     return count
 
-folder_path = ""
+folder_path = "C:/Users/junki.yeo/Downloads/ZF_L4_People_Mover_Gcovr_Report_SVNet_R20"
 result = count_multiple_condtion(folder_path)
 print("##### 멀티플 condition 분기문 총 개수: "+ str(result))
