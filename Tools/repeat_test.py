@@ -28,7 +28,7 @@ if __name__ == "__main__":
     run_wd = cwd.split('/')
     
     # Check invalid parameter
-    if run_wd[len(run_wd)-1] != "#your root directory ":
+    if run_wd[len(run_wd)-1] != "#your root directory":
         print("\033[31m" + "Python execution error: python execution location must be run from the path." + "\033[0m")
         exit()
     elif len( sys.argv ) < 3: 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
             lines = result_xml.readlines()
             expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
             
-            # Parsing test data in xml file (Only peak, avg expect value) opfe_3d_ProcessImage_peak_time
+            # Parsing test data in xml file
             for line in lines:
                 if "<failure message=" in line :
                     expect_lines.append(line)
