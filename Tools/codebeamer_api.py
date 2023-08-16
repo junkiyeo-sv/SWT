@@ -1,4 +1,4 @@
-import requests, json
+import requests
 
 # Implementing codebeamer API class
 class codebeamer_API():
@@ -30,11 +30,51 @@ class codebeamer_API():
                 if category['name'] in "Software Unit Test Cases":
                     return category['uri']
     
-    def post_test_cases(self, project_uri, category_uri, test_data):
-        # Implementing...
-        print()
+    def post_tracker(self, tracker_headers, tracker_body):
+        '''
+        tracker_headers = {'Content-Type': 'application/json'}
+        
+        tracker_body = {
+            "project"     : "projectURL",
+            "type"        : "/tracker/type/Requirement",
+            "name"        : "Python Test Post",
+            "keyName"     : "PTP",
+            "description" : "A Test tracker for Rest-Api tests",
+            "descFormat"  : "Wiki",
+            "workflow"    : True
+        }
+        '''
+        response = self.session.post(self.cb_url + '/tracker', headers=tracker_headers, json=tracker_body, auth=self.session.auth)
+        if response == 201:
+            print(response.status_code)
+        else:
+            print(response.status_code)
+            
+    def post_item(self, item_headers, item_body):
+        '''
+        item_headers = {'Content-Type': 'application/json'}
+        
+        item_body = {
+            "name"        : "Test Item",
+            "tracker"     : "trackerURL",
+            "status"      : "New",
+            "type"        : "Functional",
+            "description" : "Test item description",
+            "preAction"   : "",
+            "testSteps"   : "",
+            "postAction"  : "",
+            "comments"    : ""
+        }
+        '''
+        response = self.session.post(self.cb_url + '/item', headers=item_headers, json=item_body, auth=self.session.auth)
+        if response == 201:
+            print(response.status_code)
+        else:
+            print(response.status_code)
+
 
 # Test main script
 if __name__ == "__main__":
     cb = codebeamer_API()
-    cb.request_session('your code beamer uri', 'id', 'pwd')
+    # cb.request_session('your code beamer uri', 'id', 'pwd')
+    
