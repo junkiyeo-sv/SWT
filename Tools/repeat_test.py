@@ -54,9 +54,12 @@ if __name__ == "__main__":
             subprocess.call(['ctest', '-R', test_name])
             
             # Open xml file
-            result_xml = open("#your path" + test_name + ".xml", mode= 'r')
-            lines = result_xml.readlines()
-            expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
+            try:
+                result_xml = open("#your path" + test_name + ".xml", mode= 'r')
+            except:
+                expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
+                expect_lines.append("Test run exception ")
+                continue
             
             # Parsing test data in xml file
             for line in lines:
@@ -65,6 +68,8 @@ if __name__ == "__main__":
 
             result_xml.close()
             print("End test " + str(idx + 1) + ", " + test_name)
+            # delete xml file
+            subprocess.call(['rm', '-rf', "your path" + test_name + ".xml"])
         
         # Write test data
         result_txt = open(os.path.join(cwd, file_name), 'w')
