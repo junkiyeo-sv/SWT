@@ -52,24 +52,28 @@ if __name__ == "__main__":
         for idx in range(int(test_iter_num)):
             # Run test
             subprocess.call(['ctest', '-R', test_name])
+
+            test_dir_path = "#your test file directory path (path after build directory) ex. test_dir/src/"
             
             # Open xml file
             try:
-                result_xml = open("#your path" + test_name + ".xml", mode= 'r')
+                result_xml = open(test_dir_path + test_name + ".xml", mode= 'r')
             except:
                 expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
                 expect_lines.append("Test run exception ")
                 continue
+
+            expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
             
             # Parsing test data in xml file
-            for line in lines:
+            for line in result_xml:
                 if "<failure message=" in line :
                     expect_lines.append(line)
 
             result_xml.close()
             print("End test " + str(idx + 1) + ", " + test_name)
             # delete xml file
-            subprocess.call(['rm', '-rf', "your path" + test_name + ".xml"])
+            subprocess.call(['rm', '-rf', test_dir_path + test_name + ".xml"])
         
         # Write test data
         result_txt = open(os.path.join(cwd, file_name), 'w')
