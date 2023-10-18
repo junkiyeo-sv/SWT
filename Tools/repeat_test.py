@@ -59,8 +59,7 @@ if __name__ == "__main__":
             try:
                 result_xml = open(test_dir_path + test_name + ".xml", mode= 'r')
             except:
-                expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
-                expect_lines.append("Test run exception ")
+                expect_lines.append("Test run exception test: " + str(idx + 1) + ", " + test_name + "\n")
                 continue
 
             expect_lines.append("Run test: " + str(idx + 1) + ", " + test_name + "\n")
